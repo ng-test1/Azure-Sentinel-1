@@ -1,0 +1,30 @@
+id: f7f30247-04b7-4ef7-afa7-d8d9f36c6a3b
+name: Suspicious Microsoft Office Word Contacted Domain (via registry_event)
+description: |
+  'xploitation of a Microsoft Office apps (for example, via CVE-2021-40444) caches a C2 domain in the registry under HKCU.'
+severity: high
+requiredDataConnectors:
+  - connectorId: MicrosoftAzurePurview
+    dataTypes:
+      - PurviewDataSensitivityLogs
+queryFrequency: PT30M 
+queryPeriod: PT30M
+triggerOperator: gt
+triggerThreshold: 0
+tactics:
+  - Discovery
+relevantTechniques:
+  - T1566.001
+query: |
+  SecurityEvent 
+  |  where EventID == 12 or EventID == 13 or EventID == 14 
+  | where (TargetObject contains @'\\SOFTWARE\\Microsoft\\Office' and TargetObject contains 'http' and TargetObject contains 'EnableBHO') 
+  | extend AccountCustomEntity = TargetUserName 
+  | extend HostCustomEntity = Computer 
+  | extend IPCustomEntity = IpAddress
+customDetails:
+  AssetName: AssetName
+  ClassificationCount: ClassificationCount
+  Classification: Classification
+version: 1.0.0
+kind: scheduled
