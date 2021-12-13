@@ -1,4 +1,4 @@
-id: f7f30247-04b7-4ef7-afa7-d8d9f36c6a3b
+id: f7f30247-04b7-46e7-afa7-d8d9f36c6a3b
 name: Suspicious Microsoft Office Word Contacted Domain (via registry_event)
 description: |
   'xploitation of a Microsoft Office apps (for example, via CVE-2021-40444) caches a C2 domain in the registry under HKCU.'
